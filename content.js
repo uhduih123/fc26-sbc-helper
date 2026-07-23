@@ -1,12 +1,7 @@
-// 注入 Vue 库到页面主世界
-var vueLib = document.createElement('script');
-vueLib.src = chrome.runtime.getURL('vue.global.prod.js');
-vueLib.onload = function() {
-  var overlay = document.createElement('script');
-  overlay.src = chrome.runtime.getURL('vue-overlay.js');
-  document.head.appendChild(overlay);
-};
-document.head.appendChild(vueLib);
+// 注入 vue-inject.js 到页面主世界
+var s = document.createElement('script');
+s.src = chrome.runtime.getURL('vue-inject.js');
+document.head.appendChild(s);
 
 // 消息监听：popup → content script → postMessage 到页面
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
@@ -15,11 +10,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       sendResponse({ ready: true });
       break;
     case 'get_sbc_info':
-      window.postMessage({ source: 'fc26-extension', action: 'setMsg', value: '正在读取SBC题目...' }, '*');
       sendResponse({ rating: 83, chem: 30 });
       break;
     case 'auto_fill':
-      window.postMessage({ source: 'fc26-extension', action: 'startFill', players: request.players }, '*');
+      window.postMessage({ source: 'fc26-ext', action: 'fill', players: request.players }, '*');
       sendResponse({ success: true });
       break;
   }

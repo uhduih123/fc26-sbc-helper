@@ -19,7 +19,7 @@
     "service_worker": "background.js"
   },
   "web_accessible_resources": [{
-    "resources": ["vue-overlay.js", "vue.global.prod.js"],
+    "resources": ["vue-inject.js"],
     "matches": ["<all_urls>"]
   }],
   "icons": {
