@@ -1,4 +1,6 @@
 // 运行在页面主世界 — 加载 Vue 并创建覆盖层
+document.title = document.title + ' [VUE-INJECT-LOADED]';
+
 var vueScript = document.createElement('script');
 vueScript.src = 'https://unpkg.com/vue@3/dist/vue.global.js';
 vueScript.onload = function() {

@@ -41,9 +41,14 @@ function App() {
 
   useEffect(function() {
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, { action: 'ping' }, function(res) {
-        setStatus(res && res.ready ? '插件已就绪' : '请打开 EA SBC 页面');
-      });
+      try {
+        chrome.tabs.sendMessage(tabs[0].id, { action: 'ping' }, function(res) {
+          if (chrome.runtime.lastError) { setStatus('请打开普通网页使用'); return; }
+          setStatus(res && res.ready ? '插件已就绪' : '请打开 EA SBC 页面');
+        });
+      } catch(e) {
+        setStatus('请打开普通网页使用');
+      }
     });
   }, []);
 
@@ -52,6 +57,7 @@ function App() {
     setStatus('计算中...');
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
       chrome.tabs.sendMessage(tabs[0].id, { action: 'get_sbc_info' }, function() {
+        if (chrome.runtime.lastError) { setStatus('无法连接页面'); setLoading(false); return; }
         setTimeout(function() {
           setData(MOCK);
           setStatus('SBC 页面已识别');
