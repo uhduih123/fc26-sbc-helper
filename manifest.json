@@ -7,7 +7,7 @@
   "host_permissions": ["<all_urls>"],
   "action": {
     "default_popup": "popup.html",
-    "default_title": "FC26 SBC Helper",
+    "default_title": "FC26 SBC Helper"
   },
   "content_scripts": [
     {

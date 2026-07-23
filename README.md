@@ -2,6 +2,17 @@
 
 FC26 (EA FC) 终极团队 SBC 辅助工具。自动识别 SBC 题目要求，调用后端算法计算最低成本阵容，一键自动填阵。
 
+## 截图
+
+![screenshot1](screenshots/screenshot1.png)
+![screenshot2](screenshots/screenshot2.png)
+![screenshot3](screenshots/screenshot3.png)
+![screenshot4](screenshots/screenshot4.png)
+![screenshot5](screenshots/screenshot5.png)
+![screenshot6](screenshots/screenshot6.png)
+![screenshot7](screenshots/screenshot7.png)
+![screenshot8](screenshots/screenshot8.png)
+
 ## 功能
 
 - 自动检测 EA SBC 页面，读取题目要求（评分、化学、球员限制）
