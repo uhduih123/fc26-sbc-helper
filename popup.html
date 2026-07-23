@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <div class="header">
+      <h1>FC26 SBC Helper</h1>
+      <span class="badge">v1.0</span>
+    </div>
+
+    <div class="status-bar">
+      <span id="pageStatus">🔍 检测页面中...</span>
+    </div>
+
+    <div class="section">
+      <div class="section-title">SBC 要求</div>
+      <div class="req-grid" id="reqGrid">
+        <div class="req-item">
+          <span class="req-label">最低评分</span>
+          <span class="req-value" id="reqRating">--</span>
+        </div>
+        <div class="req-item">
+          <span class="req-label">最低化学</span>
+          <span class="req-value" id="reqChem">--</span>
+        </div>
+        <div class="req-item">
+          <span class="req-label">球员限制</span>
+          <span class="req-value" id="reqLimit">--</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">推荐方案</div>
+      <div id="resultArea">
+        <div class="placeholder">点击下方按钮计算结果</div>
+      </div>
+    </div>
+
+    <div class="players-list" id="playersList"></div>
+
+    <div class="summary" id="summaryBox">
+      <div class="summary-row">
+        <span>总评分</span>
+        <span class="green" id="totalRating">--</span>
+      </div>
+      <div class="summary-row">
+        <span>总化学</span>
+        <span class="green" id="totalChem">--</span>
+      </div>
+      <div class="summary-row">
+        <span>总花费</span>
+        <span class="gold" id="totalCost">--</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" id="calcBtn">计算最优解</button>
+      <button class="btn btn-success" id="fillBtn" disabled>一键填阵</button>
+    </div>
+
+    <div class="footer">
+      <span>数据由算法引擎提供</span>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
