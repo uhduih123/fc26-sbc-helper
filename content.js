@@ -1,14 +1,12 @@
 // 注入 Vue 库到页面主世界
 var vueLib = document.createElement('script');
 vueLib.src = chrome.runtime.getURL('vue.global.prod.js');
-document.head.appendChild(vueLib);
-
-// Vue 加载完成后注入覆盖层
 vueLib.onload = function() {
   var overlay = document.createElement('script');
   overlay.src = chrome.runtime.getURL('vue-overlay.js');
   document.head.appendChild(overlay);
 };
+document.head.appendChild(vueLib);
 
 // 消息监听：popup → content script → postMessage 到页面
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
