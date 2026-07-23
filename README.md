@@ -24,23 +24,27 @@ FC26 (EA FC) 终极团队 SBC 辅助工具。自动识别 SBC 题目要求，调
 ## 技术栈
 
 - Chrome Extension Manifest V3
-- **React 18** — Popup 弹窗界面（CDN 加载）
+- **React 18** — Popup 弹窗界面（本地加载）
 - **Vue 3** — 页面注入覆盖层（CDN 加载）
-- Content Script ↔ Popup 消息通信机制
+- Content Script ↔ Popup 消息通信
+- Content Script ↔ 页面脚本通过 `window.postMessage` 通信
 
 **为什么同时用 React + Vue：**
 - Popup 窗口使用 React 管理复杂交互状态，组件化清晰
 - 页面注入的覆盖层使用 Vue 3，更轻量，不污染目标页面 DOM
-- 两个框架通过 `chrome.runtime.sendMessage` 通信，各自独立运行
+- React + Vue 通过 `chrome.runtime.sendMessage` + `postMessage` 串联
 
 ## 项目结构
 
 ```
 ├── manifest.json    # 扩展配置文件
-├── popup.html       # 弹窗界面（加载 React）
-├── popup.jsx        # React 组件（popup 逻辑和数据展示）
+├── popup.html       # 弹窗界面（React）
+├── popup.js         # React 组件（popup 逻辑，使用 React.createElement）
+├── react.min.js     # React 18 核心库（本地加载，绕过 CSP 限制）
+├── react-dom.min.js # React DOM 库
 ├── styles.css       # 全局样式
-├── content.js       # 页面注入脚本（Vue 3 覆盖层 + 自动填阵逻辑）
+├── content.js       # 内容脚本（postMessage 桥接）
+├── vue-overlay.js   # Vue 3 覆盖层（注入到页面主世界运行）
 ├── background.js    # 后台 Service Worker
 ├── screenshots/     # 使用截图
 └── icon.png         # 图标
@@ -58,13 +62,18 @@ FC26 (EA FC) 终极团队 SBC 辅助工具。自动识别 SBC 题目要求，调
 
 ```
 EA SBC 页面
-    ↓ content.js（Vue 覆盖层显示状态）
-Chrome 扩展 Popup（React）
-    ↓ 点击"计算最优解" → chrome.runtime 发消息
-content.js 返回页面数据，popup 展示阵容
-    ↓ 点击"一键填阵" → chrome.runtime 发消息
-content.js（Vue 覆盖层）逐个放入球员
+    ↑ postMessage 更新覆盖层状态
+        ↑ content.js（消息桥接）
+            ↑ chrome.runtime 通信
+                ↑ Popup（React 渲染）
 ```
+
+**详细流程：**
+1. 用户在 EA 官网 SBC 页面点击插件图标
+2. Popup（React）发送 `chrome.runtime` 消息到 content script
+3. Content script 通过 `window.postMessage` 与 Vue 覆盖层通信
+4. Vue 覆盖层显示实时状态（读取中、填阵进度等）
+5. 点击"一键填阵" → 同上链路 → Vue 覆盖层展示填阵动画
 
 ## 开发说明
 
