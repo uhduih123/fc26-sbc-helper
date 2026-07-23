@@ -25,7 +25,7 @@ FC26 (EA FC) 终极团队 SBC 辅助工具。自动识别 SBC 题目要求，调
 
 - Chrome Extension Manifest V3
 - **React 18** — Popup 弹窗界面（本地加载）
-- **Vue 3** — 页面注入覆盖层（CDN 加载）
+- **Vue 3** — 页面注入覆盖层（本地加载）
 - Content Script ↔ Popup 消息通信
 - Content Script ↔ 页面脚本通过 `window.postMessage` 通信
 
@@ -44,6 +44,7 @@ FC26 (EA FC) 终极团队 SBC 辅助工具。自动识别 SBC 题目要求，调
 ├── react-dom.min.js # React DOM 库
 ├── styles.css       # 全局样式
 ├── content.js       # 内容脚本（postMessage 桥接）
+├── vue.global.prod.js # Vue 3 核心库（本地加载）
 ├── vue-overlay.js   # Vue 3 覆盖层（注入到页面主世界运行）
 ├── background.js    # 后台 Service Worker
 ├── screenshots/     # 使用截图
